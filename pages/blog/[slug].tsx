@@ -69,7 +69,7 @@ export function getStaticPaths(){
 
 
 
-export async function getStaticProps({ params }){
+export async function getStaticProps({ params, preview }){
   let post;
   try {
     const filesPath = path.join(process.cwd(), 'posts', params.slug + '.mdx');
@@ -77,7 +77,7 @@ export async function getStaticProps({ params }){
 
 
   } catch (error) {
-    const cmsPosts = posts.published.map( post => {
+    const cmsPosts = ( preview ? posts.draft : posts.published).map( post => {
       return matter(post);
     });
     const match = cmsPosts.find( post => post.data.slug === params.slug )
