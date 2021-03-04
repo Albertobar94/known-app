@@ -28,13 +28,13 @@ const App: FC<{ folders?: any[]; activeFolder?: any; activeDoc?: any; activeDocs
   const handleNewFolder = async (name: string) => {
     try {
       console.log('...id', name, { name })
-      const payload = {name: name};
+      const payload = { name: name.toString() };
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/folder`, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
-        },
+        }
       })
       const { data } = await res.json()
       setFolders((state) => [...state, data])
@@ -104,15 +104,15 @@ export async function getServerSideProps(context) {
   const props: any = { session }
   const { db } = await connectToDB()
   const folders = await folder.getFolders(db, session.user.id)
-  props.folders = folders
+  props.folders = folders;
 
   if (context.params.id) {
     const activeFolder = folders.find((f) => f._id === context.params.id[0])
     const activeDocs = await doc.getDocsByFolder(db, activeFolder._id)
-    props.activeFolder = activeFolder
-    props.activeDocs = activeDocs
+    props.activeFolder = activeFolder;
+    props.activeDocs = activeDocs;
 
-    const activeDocId = context.params.id[1]
+    const activeDocId = context.params.id[1];
 
     if (activeDocId) {
       props.activeDoc = await doc.getOneDoc(db, activeDocId)
@@ -120,7 +120,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props,
+    props
   }
 }
 
