@@ -11,16 +11,23 @@ const FolderPane: FC<{ folder: any; docs: any[] }> = ({ folder, docs }) => {
   const [allDocs, setDocs] = useState(docs || [])
 
   const handleNewDoc = async (name: string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/doc/`, {
-      method: 'POST',
-      body: JSON.stringify({ name, folder: folder._id }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    const { data } = await res.json()
-    setDocs((state) => [...state, data])
+    try {
+      const res = await fetch(`/api/doc/`, {
+        method: 'POST',
+        body: JSON.stringify({ name: name, folder: folder._id }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      console.log('folder pane', process.env.NEXT_PUBLIC_API_HOST);
+      console.log('folder pane', res);
+      const { data } = await res.json()
+      console.log('folder pane', data);
+      setDocs((state) => [...state, data])
+    } catch (error){
+      console.log('this is the catch', error);
+      // ${process.env.NEXT_PUBLIC_API_HOST}
+    }
   }
 
   return (
