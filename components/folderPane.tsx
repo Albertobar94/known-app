@@ -13,9 +13,10 @@ const FolderPane: FC<{ folder: any; docs: any[] }> = ({ folder, docs }) => {
   const handleNewDoc = async (name: string) => {
     try {
       console.log(name);
-      const res = await fetch(`/api/doc/`, {
+      const payload = { name: name, folder: folder._id }
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/doc`, {
         method: 'POST',
-        body: JSON.stringify({ name: name, folder: folder._id }),
+        body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
         },

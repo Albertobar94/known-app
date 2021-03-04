@@ -28,9 +28,10 @@ const App: FC<{ folders?: any[]; activeFolder?: any; activeDoc?: any; activeDocs
   const handleNewFolder = async (name: string) => {
     try {
       console.log('...id', name, { name })
-      const res = await fetch(`/api/folder/`, {
+      const payload = {name: name};
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/folder`, {
         method: 'POST',
-        body: JSON.stringify({name: name}),
+        body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
         },
