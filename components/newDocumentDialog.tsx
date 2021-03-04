@@ -17,7 +17,7 @@ const NewDocDialog = ({ onNewDoc, close, ...props }) => {
     <Dialog
       {...props}
       title="New Document"
-      confirmLabel="createx"
+      confirmLabel="create"
       intent="success"
       onConfirm={handleNewDocument}
       isConfirmLoading={saving}
